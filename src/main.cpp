@@ -12,25 +12,28 @@ public:
 
 	void DelayMod(CCObject* sender)
 	{
-		UploadActionPopup* modCheck = (UploadActionPopup*)sender;
+	/*	UploadActionPopup* modCheck = (UploadActionPopup*)sender;*/
 
-		
+		auto scene = CCDirector::get()->getRunningScene();
+	
+		UploadActionPopup* Check = (UploadActionPopup*)scene->getChildren()->objectAtIndex(1);
 
 		if (Mod::get()->getSettingValue<int64_t>("modType") == 1)
 		{
-			modCheck->showSuccessMessage("Success! Moderator access granted.");
+			Check->showSuccessMessage("Success! Moderator access granted.");
 		}
 		if (Mod::get()->getSettingValue<int64_t>("modType") == 2)
 		{
-			modCheck->showSuccessMessage("Success! Elder Moderator \n access granted.");
+			Check->showSuccessMessage("Success! Elder Moderator \n access granted.");
 		}
 	}
 
 	void DelayRate(CCObject* sender)
 	{
-		UploadActionPopup* modCheck = (UploadActionPopup*)sender;
+		auto scene = CCDirector::get()->getRunningScene();
 
-			modCheck->showSuccessMessage("Rating submitted!");
+		UploadActionPopup* Check = (UploadActionPopup*)scene->getChildren()->objectAtIndex(2);
+		Check->showSuccessMessage("Rating submitted!");
 		
 		
 	}
