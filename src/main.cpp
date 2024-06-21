@@ -41,7 +41,8 @@ public:
 class $modify(SupportLayer) {
 	void onRequestAccess(CCObject* sender) {
 
-	
+
+		auto GM = GameManager::sharedState();
 
 		if (Mod::get()->getSettingValue<int64_t>("modType") == 3)
 		{
@@ -50,7 +51,6 @@ class $modify(SupportLayer) {
 		}
 		else
 		{
-			auto GM = GameManager::sharedState();
 			UploadActionPopup* popup = UploadActionPopup::create(nullptr, "Loading...");
 			popup->show();
 			popup->runAction((CCSequence::create(
