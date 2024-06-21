@@ -57,8 +57,15 @@ class $modify(SupportLayer) {
 				CCCallFunc::create(this, callfunc_selector(modCheck::DelayMod)),
 				nullptr
 			)));
-
-			GM->m_hasRP = Mod::get()->getSettingValue<int64_t>("modType");
+			if (Mod::get()->getSettingValue<int64_t>("modType") == 3)
+			{
+				GM->m_hasRP = 0;
+			}
+			else
+			{
+				GM->m_hasRP = Mod::get()->getSettingValue<int64_t>("modType");
+			}
+			
 
 		}
 		
