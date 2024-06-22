@@ -12,11 +12,10 @@ public:
 
 	void DelayMod(CCObject* sender)
 	{
-	/*	UploadActionPopup* modCheck = (UploadActionPopup*)sender;*/
 
 		auto scene = CCDirector::get()->getRunningScene();
 	
-		UploadActionPopup* Check = (UploadActionPopup*)scene->getChildren()->objectAtIndex(1);
+		UploadActionPopup* Check = static_cast<UploadActionPopup*>(sender);
 
 		if (Mod::get()->getSettingValue<int64_t>("modType") == 1)
 		{
@@ -32,7 +31,7 @@ public:
 	{
 		auto scene = CCDirector::get()->getRunningScene();
 
-		UploadActionPopup* Check = (UploadActionPopup*)scene->getChildren()->objectAtIndex(2);
+		UploadActionPopup* Check = static_cast<UploadActionPopup*>(sender);
 		Check->showSuccessMessage("Rating submitted!");
 		
 		
@@ -40,8 +39,6 @@ public:
 };
 class $modify(SupportLayer) {
 	void onRequestAccess(CCObject* sender) {
-
-
 		auto GM = GameManager::sharedState();
 
 		if (Mod::get()->getSettingValue<int64_t>("modType") == 3)
@@ -59,21 +56,9 @@ class $modify(SupportLayer) {
 				nullptr
 			)));
 				GM->m_hasRP = Mod::get()->getSettingValue<int64_t>("modType");
-			
-			
-
 		}
-		
-		
-
-	}
-
-
-	
-	
+	}	
 };
-
-
 
 class $modify(ProfilePage)
 {
@@ -82,24 +67,13 @@ class $modify(ProfilePage)
 		int type = Mod::get()->getSettingValue<int64_t>("modType");
 		if (this->m_ownProfile)
 		{
-			
-			if (type == 1)
-			{
-				p0->m_modBadge = 1;
-			}
-			if (type == 2)
-			{
-				p0->m_modBadge = 2;
-			}
-			if (type == 3)
-			{
-				p0->m_modBadge = 3;
+			switch(type) {
+				case 1: p0->m_modBadge = type; break;
+				case 2: p0->m_modBadge = type; break;
+				case 3: p0->m_modBadge = type; break;
 			}
 		}
-		
 		ProfilePage::loadPageFromUserInfo(p0);
-
-		
 	}
 };
 
@@ -107,13 +81,20 @@ class $modify(RateStarsLayer)
 {
 	void onRate(CCObject* sender)
 	{
-		UploadActionPopup* popup = UploadActionPopup::create(nullptr, "Sending rating...");
-		popup->show();
-		popup->runAction((CCSequence::create(
-			CCDelayTime::create(1),
-			CCCallFunc::create(this, callfunc_selector(modCheck::DelayRate)),
-			nullptr
-		)));
+		CCLayer* layer = static_cast<CCLayer*>(getChildren()->objectAtIndex(0));
+
+		if (layer->getChildrenCount() == 3) {
+			UploadActionPopup* popup = UploadActionPopup::create(nullptr, "Sending rating...");
+			popup->show();
+			popup->runAction((CCSequence::create(
+				CCDelayTime::create(1),
+				CCCallFunc::create(this, callfunc_selector(modCheck::DelayRate)),
+				nullptr
+			)));
+		}
+		else {
+			RateStarsLayer::onRate(sender);
+		}
 	}
 };
 
@@ -136,12 +117,8 @@ class $modify(LevelInfoLayer)
 	void levelDeleteFailed(int a1)
 	{
 		auto scene = CCDirector::get()->getRunningScene();
-		LevelInfoLayer::levelDeleteFailed(a1);
-
-		
-
 		auto obj = (FLAlertLayer*)scene->getChildren()->lastObject();
-
+		LevelInfoLayer::levelDeleteFailed(a1);
 		
 		FLAlertLayer::create("Level Deleted", "The level has been removed from the server", "OK")->show();
 		scene->removeChild(obj);
