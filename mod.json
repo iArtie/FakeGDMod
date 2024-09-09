@@ -7,6 +7,10 @@
 		"ios": "2.206"
 	},
 	"id": "bitz.fakegdmod",
+	"tags": [
+		"content",
+		"joke"
+	],
 	"settings": {
 		"modType": {
 			"name": "Moderator Type",
