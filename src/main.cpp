@@ -6,6 +6,12 @@ using namespace geode::prelude;
 #include <Geode/modify/RateStarsLayer.hpp>
 #include <Geode/modify/RateDemonLayer.hpp>
 #include <Geode/modify/LevelInfoLayer.hpp>
+
+template<typename Base, typename T>
+inline bool instanceof(const T* ptr) {
+	return dynamic_cast<const Base*>(ptr) != nullptr;
+}
+
 class modCheck
 {
 public:
@@ -15,28 +21,52 @@ public:
 
 		auto scene = CCDirector::get()->getRunningScene();
 	
-		UploadActionPopup* Check = static_cast<UploadActionPopup*>(sender);
 
-		if (Mod::get()->getSettingValue<int64_t>("modType") == 1)
-		{
-			Check->showSuccessMessage("Success! Moderator access granted.");
-		}
-		if (Mod::get()->getSettingValue<int64_t>("modType") == 2)
-		{
-			Check->showSuccessMessage("Success! Elder Moderator \n access granted.");
-		}
+		CCObject* pObj = nullptr;
+
+				CCARRAY_FOREACH(((CCScene*)(scene))->getChildren(), pObj) {
+
+					if (instanceof<UploadActionPopup>(pObj)) {
+
+						UploadActionPopup* Check = static_cast<UploadActionPopup*>(pObj);
+
+						if (Mod::get()->getSettingValue<int64_t>("modType") == 1)
+						{
+							Check->showSuccessMessage("Success! Moderator access granted.");
+						}
+						if (Mod::get()->getSettingValue<int64_t>("modType") == 2)
+						{
+							Check->showSuccessMessage("Success! Elder Moderator \n access granted.");
+						}
+					}
+				}
+			
+		
+		
 	}
 
 	void DelayRate(CCObject* sender)
 	{
 		auto scene = CCDirector::get()->getRunningScene();
 
-		UploadActionPopup* Check = static_cast<UploadActionPopup*>(sender);
-		Check->showSuccessMessage("Rating submitted!");
+
+		CCObject* pObj = nullptr;
+
+		CCARRAY_FOREACH(((CCScene*)(scene))->getChildren(), pObj) {
+
+			if (instanceof<UploadActionPopup>(pObj)) {
+
+				UploadActionPopup* Check = static_cast<UploadActionPopup*>(pObj);
+				Check->showSuccessMessage("Rating submitted!");
+			}
+		}
+
+		
 		
 		
 	}
 };
+
 class $modify(SupportLayer) {
 	void onRequestAccess(CCObject* sender) {
 		auto GM = GameManager::sharedState();
@@ -81,7 +111,7 @@ class $modify(RateStarsLayer)
 {
 	void onRate(CCObject* sender)
 	{
-		CCLayer* layer = static_cast<CCLayer*>(getChildren()->objectAtIndex(0));
+		CCLayer* layer = static_cast<CCLayer*>(this->getChildren()->objectAtIndex(0));
 
 		if (layer->getChildrenCount() == 3) {
 			UploadActionPopup* popup = UploadActionPopup::create(nullptr, "Sending rating...");
@@ -118,9 +148,31 @@ class $modify(LevelInfoLayer)
 	{
 		auto scene = CCDirector::get()->getRunningScene();
 		auto obj = (FLAlertLayer*)scene->getChildren()->lastObject();
-		LevelInfoLayer::levelDeleteFailed(a1);
 		
-		FLAlertLayer::create("Level Deleted", "The level has been removed from the server", "OK")->show();
-		scene->removeChild(obj);
+		
+		if (Mod::get()->getSettingValue<int64_t>("modType") == 1 || Mod::get()->getSettingValue<int64_t>("modType") == 2)
+		{
+
+			
+
+			FLAlertLayer::create("Level Deleted", "The level has been removed from the server", "OK")->show();
+			/*scene->removeChild(obj);*/
+
+			CCObject* pObj = nullptr;
+
+			CCARRAY_FOREACH(((LevelInfoLayer*)(this))->getChildren(), pObj) {
+
+				if (instanceof<LoadingCircle>(pObj)) {
+
+					LoadingCircle* loadingCircle = static_cast<LoadingCircle*>(pObj);
+
+					loadingCircle->setVisible(false);
+				}
+			}
+		}
+		else
+		{
+			LevelInfoLayer::levelDeleteFailed(a1);
+		}
 	}
 };
