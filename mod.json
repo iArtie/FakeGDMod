@@ -1,15 +1,15 @@
 {
-	"geode": "3.4.0",
+	"geode": "4.1.0",
 	"gd": {
-		"win": "2.206",
-		"android": "2.206",
-		"mac": "2.206",
-		"ios": "2.206"
+		"win": "2.2074",
+		"android": "2.2074",
+		"mac": "2.2074",
+		"ios": "2.2074"
 	},
 	"id": "bitz.fakegdmod",
 	"tags": [
-		"content",
-		"joke"
+		"joke",
+		"content"
 	],
 	"settings": {
 		"modType": {
@@ -22,7 +22,7 @@
 		}
 	},
 	"name": "FakeGDMod",
-	"version": "v1.0.0",
+	"version": "v1.0.1",
 	"developer": "BitZ",
 	"description": "A cool mod that make you a fake moderator"
 }
