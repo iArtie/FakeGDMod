@@ -1,5 +1,5 @@
 {
-	"geode": "4.1.0",
+	"geode": "4.1.2",
 	"gd": {
 		"win": "2.2074",
 		"android": "2.2074",
@@ -20,6 +20,10 @@
 			"min": 1,
 			"max": 3
 		}
+	},
+	"links": {
+		"source": "https://github.com/iArtie/FakeGDMod",
+		"community": "https://discord.gg/gXg8w4xJDA"
 	},
 	"name": "FakeGDMod",
 	"version": "v1.0.1",
