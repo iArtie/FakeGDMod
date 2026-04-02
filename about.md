@@ -9,15 +9,15 @@ You can change the type of moderator you want to be at any time you want simply 
 
 This contains the 3 different types of mods:
 
-- **Moderator** ![moderator](frame:modBadge_01_001.png&scale:0.6)
+- **Moderator** ![moderator](frame:modBadge_01_001.png?scale=0.6)
 
 This allows you to send levels and delete levels, in addition to having the moderator badge on your profile
 
-- **Elder Moderator** ![eldermoderator](frame:modBadge_02_001.png&scale:0.6)
+- **Elder Moderator** ![eldermoderator](frame:modBadge_02_001.png?scale=0.6)
 
 This is all of the above and you can additionally delete comments from other users both on the profile and on the levels, even those of the same <cr>RobTop</c>
 
-- **Leaderboard Moderator** ![lbmoderator](frame:modBadge_03_001.png&scale:0.6)
+- **Leaderboard Moderator** ![lbmoderator](frame:modBadge_03_001.png?scale=0.6)
 
 This really doesn't do anything more than have the badge within the game, since all the management of the leaderboards is done externally to the game
 
